@@ -83,6 +83,19 @@ options:
     - name: ansible_password
     - name: ansible_httpapi_pass
     - name: ansible_httpapi_password
+  basic_auth_user:
+    description:
+    - Configures the user used to authenticate to the remote device with
+      http basic authentication.
+    vars:
+    - name: ansible_httpapi_basic_auth_user
+  basic_auth_password:
+    description:
+    - Configures the user password used to authenticate to the remote device with
+      http basic authentication.
+    vars:
+    - name: ansible_httpapi_basic_auth_pass
+    - name: ansible_httpapi_basic_auth_password
   session_key:
     type: dict
     description:
@@ -246,7 +259,7 @@ class Connection(NetworkConnectionBase):
                 self._auth = self.get_option("session_key")
             else:
                 self.httpapi.login(
-                    self.get_option("remote_user"), self.get_option("password")
+                    self.get_option("remote_user"), self.get_option("password"),
                 )
 
     def close(self):
@@ -274,14 +287,16 @@ class Connection(NetworkConnectionBase):
         url_kwargs.update(kwargs)
         if payload["method"] != "apiinfo.version":
             if self._auth:
-                # Avoid modifying passed-in headers
-                headers = dict(kwargs.get("headers", {}))
-                url_kwargs["headers"] = headers
                 payload.update({'auth': self._auth})
-            else:
-                url_kwargs["force_basic_auth"] = True
-                url_kwargs["url_username"] = self.get_option("remote_user")
-                url_kwargs["url_password"] = self.get_option("password")
+
+        # Avoid modifying passed-in headers
+        headers = dict(kwargs.get("headers", {}))
+        url_kwargs["headers"] = headers
+
+        if self.has_option("basic_auth_user"):
+          url_kwargs["force_basic_auth"] = True
+          url_kwargs["url_username"] = self.get_option("basic_auth_user")
+          url_kwargs["url_password"] = self.get_option("basic_auth_password")
 
         try:
             url = self._url + path

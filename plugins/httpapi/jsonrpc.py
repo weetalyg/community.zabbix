@@ -13,7 +13,12 @@ author: fischbacher.markus@gmail.com
 httpapi : zabbix
 short_description: HttpApi Plugin for Zabbix
 description:
-  - This HttpApi plugin provides methods to connect to Zabbix over their HTTP(S)-based api.
+    - This HttpApi plugin provides methods to connect to Zabbix over their HTTP(S)-based api.
+notes:
+    - remote_user (ansible_user) = Zabbix User
+    - password (ansible_password) = Zabbix User Password
+    - basic_auth_user = HTTP Basic Auth User
+    - basic_auth_password = HTTP Basic Auth Password
 version_added: "1.5.1"
 """
 
