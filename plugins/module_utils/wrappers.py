@@ -53,7 +53,7 @@ class ZapiWrapper(object):
                 module.fail_json(msg='The required settings for httpapi connection are not provided.')
 
             self._module.warn('Usage of httpapi is considered experimental')
-            legacy_options = ['server_url', 'host', 'port', 'http_login_user', 'http_login_password']
+            legacy_options = ['server_url', 'host', 'port', 'login_user', 'login_password', 'http_login_user', 'http_login_password']
             legacy_params = []
             for param in legacy_options:
                 if param in legacy_options:
@@ -67,6 +67,8 @@ class ZapiWrapper(object):
                 self._api_request.connection.set_option('port', _host.port)
                 self._api_request.connection.set_option('remote_user', module.params['login_user'])
                 self._api_request.connection.set_option('password', module.params['login_password'])
+                self._api_request.connection.set_option('basic_auth_user', module.params['http_login_user'])
+                self._api_request.connection.set_option('basic_auth_password', module.params['http_login_password'])
 
             try:
                 self._zbx_api_version = self._api_request.connection.api_version()[:5]
