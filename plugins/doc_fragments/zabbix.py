@@ -9,6 +9,17 @@ class ModuleDocFragment(object):
     # Standard documentation fragment
     DOCUMENTATION = r'''
 options:
+    connection_type:
+        description:
+            - Type of connection to Zabbix API.
+            - C(auto) will use C(zabbix-api) pip package for now but
+              C(httpapi) is supposed to replace pip package over time.
+            - Manual change to C(zabbix-api) ensure compatibility.
+            - Manual change to C(httpapi) is experimental for now.
+        required: false
+        type: str
+        default: 'auto'
+        choices: ['auto','httpapi','zabbix-api']
     server_url:
         description:
             - URL of Zabbix server, with protocol (http or https).

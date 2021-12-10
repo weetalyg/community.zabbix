@@ -52,6 +52,12 @@ def zabbix_common_argument_spec():
             default=True,
             fallback=(env_fallback, ['ZABBIX_VALIDATE_CERTS'])
         ),
+        connection_type=dict(
+            type='str',
+            required=False,
+            default='auto',
+            choices=['auto','httpapi','zabbix-api']
+        )
     )
 
 
