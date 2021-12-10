@@ -65,8 +65,8 @@ class ZapiWrapper(object):
                 _host = urlparse(module.params['server_url'])
                 self._api_request.connection.set_option('host', _host.hostname)
                 self._api_request.connection.set_option('port', _host.port)
-                self._api_request.connection.set_option('remote_user', module.params['http_login_user'])
-                self._api_request.connection.set_option('password', module.params['http_login_password'])
+                self._api_request.connection.set_option('remote_user', module.params['login_user'])
+                self._api_request.connection.set_option('password', module.params['login_password'])
 
             try:
                 self._zbx_api_version = self._api_request.connection.api_version()[:5]
