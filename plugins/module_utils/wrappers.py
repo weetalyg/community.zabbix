@@ -46,21 +46,20 @@ class ZapiWrapper(object):
             _try_httpapi = True
             _try_zapi    = False
 
-        self._module.warn("%s or %s" % (_try_httpapi, _try_zapi))
-
         if _try_httpapi:
             if not self._module._socket_path:
                 module.fail_json(msg='The required settings for httpapi connection are not provided.')
 
             self._module.warn('Usage of httpapi is considered experimental')
+            given_params = self._module.params
             legacy_options = ['server_url', 'host', 'port', 'login_user', 'login_password', 'http_login_user', 'http_login_password']
             legacy_params = []
             for param in legacy_options:
-                if param in legacy_options:
+                if param in given_params and given_params[param] != None:
                     legacy_params.append(param)
 
             self._api_request = ZabbixApiRequest(self._module)
-            if legacy_params:
+            if len(legacy_params):
                 self._module.warn('If using httpapi old module options should be replaced - see documentation')
                 _host = urlparse(module.params['server_url'])
                 self._api_request.connection.set_option('host', _host.hostname)
