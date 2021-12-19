@@ -207,7 +207,7 @@ def main():
         force=dict(type='bool', default=True)
     ))
 
-    required_if=[
+    required_if = [
         ('state', 'present', ('macro_value'))
     ]
     required_if.extend(zabbix_utils.zabbix_common_required_if_spec())

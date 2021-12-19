@@ -294,9 +294,9 @@ class Connection(NetworkConnectionBase):
         url_kwargs["headers"] = headers
 
         if self.has_option("basic_auth_user"):
-          url_kwargs["force_basic_auth"] = True
-          url_kwargs["url_username"] = self.get_option("basic_auth_user")
-          url_kwargs["url_password"] = self.get_option("basic_auth_password")
+            url_kwargs["force_basic_auth"] = True
+            url_kwargs["url_username"] = self.get_option("basic_auth_user")
+            url_kwargs["url_password"] = self.get_option("basic_auth_password")
 
         try:
             url = self._url + path

@@ -623,7 +623,7 @@ def main():
         state=dict(type='str', default="present", choices=['present', 'absent'])
     ))
 
-    required_if=[
+    required_if = [
         ('state', 'present', ('usrgrps',))
     ]
     required_if.extend(zabbix_utils.zabbix_common_required_if_spec())

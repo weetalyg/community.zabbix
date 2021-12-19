@@ -1959,14 +1959,14 @@ def main():
         )
     ))
 
-    required_if=[
+    required_if = [
         ('state', 'present', ('esc_period', 'event_source'))
     ]
     required_if.extend(zabbix_utils.zabbix_common_required_if_spec())
 
     module = AnsibleModule(
         argument_spec=argument_spec,
-        required_if=required_if
+        required_if=required_if,
         supports_check_mode=True
     )
 

@@ -38,13 +38,13 @@ class ZapiWrapper(object):
 
         if self.get_connection_type() == 'auto':
             _try_httpapi = False
-            _try_zapi    = True
+            _try_zapi = True
         elif self.get_connection_type() == 'zabbix-api':
             _try_httpapi = False
-            _try_zapi    = True
+            _try_zapi = True
         elif self.get_connection_type() == 'httpapi':
             _try_httpapi = True
-            _try_zapi    = False
+            _try_zapi = False
 
         if _try_httpapi:
             if not self._module._socket_path:
@@ -55,7 +55,7 @@ class ZapiWrapper(object):
             legacy_options = ['server_url', 'host', 'port', 'login_user', 'login_password', 'http_login_user', 'http_login_password']
             legacy_params = []
             for param in legacy_options:
-                if param in given_params and given_params[param] != None:
+                if param in given_params and given_params[param] is not None:
                     legacy_params.append(param)
 
             self._api_request = ZabbixApiRequest(self._module)
@@ -77,7 +77,7 @@ class ZapiWrapper(object):
             except ConnectionError as error:
                 if _try_zapi is False:
                     self._module.fail_json(msg='Initialization of httpapi failed but zabbix-api fallback disabled',
-                        exception=error)
+                                           exception=error)
                 else:
                     self._module.warn('Initialization of httpapi failed try fallback to zabbix-api')
 
@@ -104,7 +104,7 @@ class ZapiWrapper(object):
             self._is_httpapi = False
             self._is_zabbix_api = True
 
-        if not self._zapi or self._zapi == None:
+        if not self._zapi or self._zapi is None:
             self._module.fail_json(msg="None of the connection type worked. See stdout/stderr for the exact error.")
 
     def get_connection_type(self):

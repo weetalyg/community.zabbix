@@ -19,6 +19,7 @@ def zabbix_common_required_if_spec():
         ('connection_type', 'zabbix-api', ('server_url', 'login_password', 'login_user'))
     ]
 
+
 def zabbix_common_argument_spec():
     """
     Return a dictionary with connection options.
@@ -29,7 +30,7 @@ def zabbix_common_argument_spec():
             type='str',
             required=False,
             default='auto',
-            choices=['auto','httpapi','zabbix-api']
+            choices=['auto', 'httpapi', 'zabbix-api']
         ),
         server_url=dict(
             type='str',

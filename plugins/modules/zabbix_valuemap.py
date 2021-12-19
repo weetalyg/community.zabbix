@@ -204,7 +204,7 @@ def main():
         )
     ))
 
-    required_if=[
+    required_if = [
         ('state', 'present', ('mappings',))
     ]
     required_if.extend(zabbix_utils.zabbix_common_required_if_spec())
