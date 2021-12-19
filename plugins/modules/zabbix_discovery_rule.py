@@ -626,7 +626,7 @@ def main():
 
     required_if = [
         ('state', 'present', ('name', 'iprange', 'dchecks')),
-        ('state', 'absent', ('name')),
+        ('state', 'absent', ('name',)),
     ]
     required_if.extend(zabbix_utils.zabbix_common_required_if_spec())
 
