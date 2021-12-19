@@ -664,6 +664,13 @@ def main():
         dump_format=dict(type='str', required=False, default='json', choices=['json', 'xml']),
         state=dict(type='str', default="present", choices=['present', 'absent', 'dump']),
     ))
+
+    required_if = [
+        ('state', 'absent', ('template_name',)),
+        ('state', 'dump', ('template_name',))
+    ]
+    required_if.extend(zabbix_utils.zabbix_common_required_if_spec())
+
     module = AnsibleModule(
         argument_spec=argument_spec,
         required_one_of=[
@@ -672,10 +679,7 @@ def main():
         mutually_exclusive=[
             ['template_name', 'template_json', 'template_xml']
         ],
-        required_if=[
-            ['state', 'absent', ['template_name']],
-            ['state', 'dump', ['template_name']]
-        ],
+        required_if=required_if,
         supports_check_mode=True
     )
 

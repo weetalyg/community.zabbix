@@ -169,8 +169,12 @@ def main():
         remove_duplicate=dict(type='bool', required=False, default=True),
         host_inventory=dict(type='list', default=[], required=False)
     ))
+
+    required_if = zabbix_utils.zabbix_common_required_if_spec()
+
     module = AnsibleModule(
         argument_spec=argument_spec,
+        required_if=required_if,
         supports_check_mode=True
     )
     if module._name == 'zabbix_host_facts':

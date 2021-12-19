@@ -9,25 +9,42 @@ __metaclass__ = type
 from ansible.module_utils.basic import env_fallback
 
 
+def zabbix_common_required_if_spec():
+    """
+    Returns an array with the required_if options.
+    The options are commonly used by most of Zabbix modules.
+    """
+    return [
+        ('connection_type', 'auto', ('server_url', 'login_password', 'login_user')),
+        ('connection_type', 'zabbix-api', ('server_url', 'login_password', 'login_user'))
+    ]
+
 def zabbix_common_argument_spec():
     """
     Return a dictionary with connection options.
     The options are commonly used by most of Zabbix modules.
     """
     return dict(
+        connection_type=dict(
+            type='str',
+            required=False,
+            default='auto',
+            choices=['auto','httpapi','zabbix-api']
+        ),
         server_url=dict(
             type='str',
-            required=True,
+            required=False,
             aliases=['url'],
             fallback=(env_fallback, ['ZABBIX_SERVER'])
         ),
         login_user=dict(
-            type='str', required=True,
+            type='str',
+            required=False,
             fallback=(env_fallback, ['ZABBIX_USERNAME'])
         ),
         login_password=dict(
             type='str',
-            required=True,
+            required=False,
             no_log=True,
             fallback=(env_fallback, ['ZABBIX_PASSWORD'])
         ),
@@ -51,12 +68,6 @@ def zabbix_common_argument_spec():
             required=False,
             default=True,
             fallback=(env_fallback, ['ZABBIX_VALIDATE_CERTS'])
-        ),
-        connection_type=dict(
-            type='str',
-            required=False,
-            default='auto',
-            choices=['auto','httpapi','zabbix-api']
         )
     )
 

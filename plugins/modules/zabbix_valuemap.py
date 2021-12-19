@@ -203,12 +203,16 @@ def main():
             )
         )
     ))
+
+    required_if=[
+        ('state', 'present', ('mappings',))
+    ]
+    required_if.extend(zabbix_utils.zabbix_common_required_if_spec())
+
     module = AnsibleModule(
         argument_spec=argument_spec,
-        supports_check_mode=True,
-        required_if=[
-            ['state', 'present', ['mappings']],
-        ]
+        required_if=required_if,
+        supports_check_mode=True
     )
 
     vm = ValuemapModule(module)

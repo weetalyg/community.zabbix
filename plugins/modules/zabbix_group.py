@@ -134,8 +134,12 @@ def main():
         host_groups=dict(type='list', required=True, aliases=['host_group']),
         state=dict(type='str', default="present", choices=['present', 'absent']),
     ))
+
+    required_if = zabbix_utils.zabbix_common_required_if_spec()
+
     module = AnsibleModule(
         argument_spec=argument_spec,
+        required_if=required_if,
         supports_check_mode=True
     )
 

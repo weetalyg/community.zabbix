@@ -622,11 +622,15 @@ def main():
         type=dict(type='str', choices=['Zabbix user', 'Zabbix admin', 'Zabbix super admin']),
         state=dict(type='str', default="present", choices=['present', 'absent'])
     ))
+
+    required_if=[
+        ('state', 'present', ('usrgrps',))
+    ]
+    required_if.extend(zabbix_utils.zabbix_common_required_if_spec())
+
     module = AnsibleModule(
         argument_spec=argument_spec,
-        required_if=[
-            ['state', 'present', ['usrgrps']]
-        ],
+        required_if=required_if,
         supports_check_mode=True
     )
 

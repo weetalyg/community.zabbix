@@ -16,6 +16,7 @@ options:
               C(httpapi) is supposed to replace pip package over time.
             - Manual change to C(zabbix-api) ensure compatibility.
             - Manual change to C(httpapi) is experimental for now.
+            - C(zabbix-api) or C(auto) will require C(server_url), C(login_user), C(login_password)
         required: false
         type: str
         default: 'auto'
@@ -25,21 +26,24 @@ options:
             - URL of Zabbix server, with protocol (http or https).
               C(url) is an alias for C(server_url).
             - If not set the environment variable C(ZABBIX_SERVER) will be used.
-        required: true
+            - Required if I(connection_type!=httpapi).
+        required: false
         type: str
         aliases: [ url ]
     login_user:
         description:
             - Zabbix user name.
             - If not set the environment variable C(ZABBIX_USERNAME) will be used.
+            - Required if I(connection_type!=httpapi).
         type: str
-        required: true
+        required: false
     login_password:
         description:
             - Zabbix user password.
             - If not set the environment variable C(ZABBIX_PASSWORD) will be used.
+            - Required if I(connection_type!=httpapi).
         type: str
-        required: true
+        required: false
     http_login_user:
         description:
             - Basic Auth login
