@@ -23,6 +23,7 @@ except ImportError:
     ZBX_IMP_ERR = traceback.format_exc()
     HAS_ZABBIX_API = False
 
+
 class ZapiWrapper(object):
     _is_httpapi = False
     _is_zabbix_api = False
